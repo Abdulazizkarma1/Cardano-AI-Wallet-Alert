@@ -1,249 +1,378 @@
-# Cardano AI Wallet Alerts - Prototype
+# Cardano AI Wallet Alerts — Prototype  
+**AI-powered event trigger framework for Cardano (Prototype Version)**  
+![status](https://img.shields.io/badge/status-prototype-blue)  
+![license](https://img.shields.io/badge/license-MIT-green)  
+![language](https://img.shields.io/badge/language-Python%20%7C%20FastAPI-orange)  
 
-A prototype repository demonstrating the structure and approach for a natural language wallet alert system for Cardano blockchain.
+This repository contains a **minimal, structured prototype** demonstrating the architecture of the *Cardano AI Wallet Alerts* system.  
+It is **not** a full implementation — the goal is to show feasibility, structure, and developer capability for future development.
 
-## 🎯 Project Overview
+---
 
-This is a **prototype** repository that demonstrates the architecture and feasibility of a system that:
-- Converts natural language instructions into structured wallet alert rules
-- Monitors Cardano wallets for specified conditions
-- Sends notifications when conditions are met
+## 🚀 Overview
 
-**Important**: This is a mock/prototype implementation. No real blockchain integrations or AI services are used.
+**Cardano AI Wallet Alerts** allows users to set real-time Cardano wallet alerts using **plain English**, such as:
+
+> "Notify me on Telegram when my wallet receives more than 200 ADA in one hour."
+
+This prototype demonstrates:
+
+- Modular backend architecture  
+- Mock AI natural-language parser  
+- Mock blockchain event listener  
+- Mock notification system  
+- FastAPI endpoints  
+- Optional minimal frontend  
+
+---
+
+## 📁 Repository Structure
+
+
 
 ## 📁 Repository Structure
 
 ```
-ai-wallet/
-├── backend/                 # FastAPI backend
-│   ├── app/
-│   │   ├── routes/         # API endpoints
-│   │   ├── models/         # Pydantic data models
-│   │   ├── services/       # Business logic (parser, listener, notifications)
-│   │   ├── utils/          # Utility functions
-│   │   └── main.py         # FastAPI application
-│   ├── requirements.txt
-│   └── README.md
-├── frontend/                # React frontend
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── services/       # API service layer
-│   │   └── ...
-│   ├── package.json
-│   └── README.md
-└── README.md               # This file
-```
+/
+├── backend/
+│ ├── app/
+│ │ ├── routes/
+│ │ ├── services/
+│ │ ├── models/
+│ │ ├── utils/
+│ │ └── main.py
+│ ├── requirements.txt
+│ └── README.md
+│
+├── frontend/ (optional UI prototype)
+│ ├── src/
+│ ├── package.json
+│ └── README.md
+│
+└── docs/
+├── ARCHITECTURE.md
+├── API_REFERENCE.md
+└── ROADMAP.md
 
-## 🏗️ Architecture Overview
-
-### Backend (FastAPI)
-
-The backend is organized into modular components:
-
-- **Routes** (`/routes`): API endpoints for rule management and parsing
-- **Models** (`/models`): Pydantic schemas for data validation
-- **Services** (`/services`):
-  - `parser.py`: Mock natural language → rule parser
-  - `listener.py`: Mock blockchain event listener
-  - `notifications.py`: Mock notification dispatcher
-- **Utils** (`/utils`): Shared utility functions
-
-### Frontend (React)
-
-Simple React application with:
-- Rule creation form (with natural language parsing option)
-- Rules list view
-- API integration layer
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.8+
-- Node.js 14+
-- npm or yarn
-
-### Backend Setup
-
-1. Navigate to backend directory:
-```bash
-cd backend
-```
-
-2. Create virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Start the server:
-```bash
-uvicorn app.main:app --reload --port 8000
-```
-
-The API will be available at:
-- API: http://localhost:8000
-- Interactive docs: http://localhost:8000/docs
-
-### Frontend Setup
-
-1. Navigate to frontend directory:
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm start
-```
-
-The app will open at http://localhost:3000
-
-## 📡 API Endpoints
-
-### Rules Management
-
-- `POST /rules` - Create a new alert rule
-- `GET /rules` - List all rules
-- `GET /rules/{id}` - Get a specific rule
-- `DELETE /rules/{id}` - Delete a rule
-
-### Natural Language Parsing
-
-- `POST /parse` - Convert natural language instruction into rule structure
-
-### Example API Calls
-
-#### Create a Rule
-
-```bash
-curl -X POST "http://localhost:8000/rules" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "wallet_address": "addr_test1...",
-    "condition": "receive > 100 ADA",
-    "timeframe": "1h",
-    "notification_channel": "email"
-  }'
-```
-
-#### Parse Natural Language
-
-```bash
-curl -X POST "http://localhost:8000/parse" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "instruction": "Alert me when wallet addr_test1... receives more than 100 ADA in the next hour"
-  }'
-```
-
-#### List All Rules
-
-```bash
-curl -X GET "http://localhost:8000/rules"
-```
-
-## 🔧 Mock Implementation Details
-
-All services are currently **mock implementations**:
-
-### Parser Service (`services/parser.py`)
-- Uses simple regex pattern matching
-- Extracts wallet addresses, amounts, conditions, and timeframes
-- In production: Would use LLM (OpenAI, Anthropic) or NLP models
-
-### Listener Service (`services/listener.py`)
-- Simulates blockchain event detection with random results
-- In production: Would connect to Cardano APIs (Blockfrost, Koios) or Cardano node
-
-### Notification Service (`services/notifications.py`)
-- Prints notifications to console
-- In production: Would integrate with email (SendGrid), SMS (Twilio), push (FCM), or webhooks
-
-## 🔮 Future Module Expansion
-
-### Backend Enhancements
-
-1. **AI Integration**
-   - Replace mock parser with OpenAI GPT-4 or Anthropic Claude
-   - Add prompt engineering for better rule extraction
-   - Implement confidence scoring for parsed rules
-
-2. **Blockchain Integration**
-   - Integrate with Blockfrost API or Koios API
-   - Add real-time transaction monitoring
-   - Implement WebSocket connections for live updates
-
-3. **Database Persistence**
-   - Add PostgreSQL or MongoDB for rule storage
-   - Implement user authentication and multi-tenancy
-   - Add rule history and event logging
-
-4. **Background Processing**
-   - Implement Celery or RQ for async task processing
-   - Add scheduled polling for wallet monitoring
-   - Implement retry logic and error handling
-
-5. **Notification Channels**
-   - Email: SendGrid, AWS SES
-   - SMS: Twilio, AWS SNS
-   - Push: Firebase Cloud Messaging
-   - Webhook: HTTP POST with retry logic
-
-### Frontend Enhancements
-
-1. **User Interface**
-   - Add user authentication
-   - Implement rule editing
-   - Add rule testing/preview
-   - Create dashboard with statistics
-
-2. **Features**
-   - Real-time updates via WebSocket
-   - Rule templates and presets
-   - Notification history
-   - Export/import rules
-
-## 📝 Development Notes
-
-- **Data Storage**: Currently uses in-memory storage. Rules are lost on server restart.
-- **Error Handling**: Basic error handling implemented. Production would need comprehensive error handling.
-- **Security**: No authentication/authorization. CORS is open for development.
-- **Testing**: No tests included in prototype. Production would need unit and integration tests.
-
-## 🎓 Learning Resources
-
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [React Documentation](https://react.dev/)
-- [Cardano Developer Portal](https://developers.cardano.org/)
-- [Blockfrost API](https://blockfrost.io/)
-
-## 📄 License
-
-This is a prototype repository for demonstration purposes.
-
-## 🤝 Contributing
-
-This is a prototype repository. For production development, consider:
-- Adding comprehensive tests
-- Implementing proper error handling
-- Adding authentication and security
-- Setting up CI/CD pipelines
-- Adding monitoring and logging
 
 ---
 
-**Note**: This prototype demonstrates structure and feasibility. All implementations are mock/dummy services and should not be used in production without proper integration and security measures.
+## 🧠 Key Prototype Components
+
+### 1️⃣ Mock AI Rule Parser  
+Located in `backend/app/services/parser.py`
+
+```python
+def parse_instruction(text: str):
+    return {
+        "instruction": text,
+        "parsed_rule": {
+            "wallet": "addr_test1...",
+            "condition": "receive > 100 ADA",
+            "timeframe": "1h"
+        }
+    }
+
+2️⃣ Mock Blockchain Listener
+
+backend/app/services/listener.py
+
+def check_wallet_events(rule):
+    return {"event_detected": False}
+
+3️⃣ Mock Notification Dispatcher
+
+backend/app/services/notifications.py
+
+def send_notification(channel, message):
+    print(f"[{channel.upper()}] {message}")
+
+4️⃣ FastAPI Endpoints
+
+POST /parse – Convert natural-language → rule
+
+POST /rules – Create rule
+
+GET /rules – List rules
+
+GET /health – System status
+
+▶️ Running the Backend
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+
+🧪 Example API Test
+Parse instruction
+curl -X POST http://localhost:8000/parse \
+  -H "Content-Type: application/json" \
+  -d '{"instruction": "Notify me when wallet X gets 50 ADA"}'
+
+🛠 Technologies Used
+
+Python + FastAPI
+
+Mock AI parsing logic
+
+Mock Cardano listener
+
+Mock notification system
+
+React/Next.js (optional UI prototype)
+
+📚 Documentation
+Document	Description
+ARCHITECTURE.md
+	System design + diagrams
+API_REFERENCE.md
+	All mock API endpoints
+ROADMAP.md
+	Future development plan
+🧭 Project Status
+
+This repository represents Phase 0 – Prototype feasibility.
+It provides the foundation required to proceed toward a full implementation.
+
+🤝 Contributing
+
+This project is open-source under the MIT License.
+Issues, suggestions, and PRs are welcome.
+
+🧵 Related Proposal
+
+This prototype supports the Catalyst proposal:
+
+"Cardano AI Wallet Alerts for Instant Blockchain Events" (Fund 1)
+
+
+---
+
+# ✅ **`docs/ARCHITECTURE.md` (GitHub Ready)**  
+Copy to: `docs/ARCHITECTURE.md`
+
+---
+
+```markdown
+# 🏗 Architecture Overview — Cardano AI Wallet Alerts
+
+This document describes the prototype architecture for the Cardano AI Wallet Alerts system.
+
+---
+
+## 🧱 High-Level System Overview
+
+
+
+User → Natural Instruction → AI Parser → Rule Engine → Event Listener → Notification System
+
+
+Each module in this prototype is implemented in **mock mode** to demonstrate structure and feasibility.
+
+---
+
+## 🔧 Modules
+
+### **1. AI Rule Parser**
+Converts plain English instructions into structured rule JSON.
+
+Example:
+```json
+{
+  "wallet": "addr...",
+  "condition": "receive > 100 ADA",
+  "timeframe": "1h"
+}
+
+2. Rule Engine
+
+Handles:
+
+Rule creation
+
+Rule storage (in-memory prototype)
+
+Rule listing
+
+3. Blockchain Listener
+
+Monitors blockchain activity (mock).
+
+Real implementation will use:
+
+Koios
+
+Blockfrost
+
+Optional lightweight listener
+
+4. Notification System
+
+Sends alerts through:
+
+Telegram
+
+Email
+
+Discord
+
+SMS
+
+Webhooks
+
+In the prototype, notifications print to console.
+
+📦 Folder Structure Visualization
+backend/app
+│
+├── routes/        # API endpoints
+├── services/      # Core business logic
+├── models/        # Data models
+└── utils/         # Helpers
+
+📈 Real Project Scaling Path
+
+Replace mock parser → real LLM
+
+Replace mock listener → Koios / Blockfrost streams
+
+Add database for rule persistence
+
+Add authentication
+
+Add SDK & developer tools
+
+
+---
+
+# ✅ **`docs/API_REFERENCE.md` (GitHub Ready)**  
+Copy to: `docs/API_REFERENCE.md`
+
+---
+
+```markdown
+# 📘 API Reference — Prototype Version
+
+This document lists the API endpoints available in this prototype.
+
+---
+
+## **GET /health**
+Returns system status.
+
+### Response:
+```json
+{"status": "ok"}
+
+POST /parse
+
+Converts a natural-language instruction into a structured rule.
+
+Request:
+{
+  "instruction": "Notify me when wallet X receives 50 ADA"
+}
+
+Response (mock):
+{
+  "instruction": "...",
+  "parsed_rule": { ... }
+}
+
+POST /rules
+
+Create a new rule.
+
+Request:
+{
+  "wallet": "addr_test1...",
+  "rule": "receive > 50 ADA"
+}
+
+GET /rules
+
+Lists stored rules.
+
+
+---
+
+# ✅ **`docs/ROADMAP.md` (GitHub Ready)**  
+Copy to: `docs/ROADMAP.md`
+
+---
+
+```markdown
+# 🛣 Roadmap — From Prototype to Full System
+
+This roadmap outlines the progression from this prototype to a complete production system.
+
+---
+
+## 🚀 Phase 0 — Prototype (This Repo)
+- Mock AI parser  
+- Mock blockchain listener  
+- Mock notifications  
+- FastAPI endpoints  
+- Minimal UI structure  
+- Documentation  
+
+---
+
+## 🚀 Phase 1 — AI Integration
+- Connect real LLMs (OpenAI or open-source)  
+- Build training data for event rules  
+- Add validation engine  
+
+---
+
+## 🚀 Phase 2 — Blockchain Integration
+- Koios API indexing  
+- Blockfrost API indexing  
+- Event streaming  
+- Error handling and retries  
+
+---
+
+## 🚀 Phase 3 — Persistence Layer
+- PostgreSQL or SQLite  
+- User accounts  
+- Rule history  
+- Event logs  
+
+---
+
+## 🚀 Phase 4 — Notification Channels
+- Telegram bot  
+- Email integration  
+- Discord bot  
+- SMS  
+- Webhooks  
+
+---
+
+## 🚀 Phase 5 — Web Dashboard
+- Rule creator  
+- Rule management  
+- Real-time event view  
+- Analytics dashboard  
+
+---
+
+## 🚀 Phase 6 — SDK + Developer Tools
+- Python SDK  
+- JavaScript SDK  
+- Webhooks API  
+- CLI tools  
+
+---
+
+## 🚀 Phase 7 — Production Deployment
+- CI/CD  
+- Load balancing  
+- Monitoring & alerting  
+- Full open-source release  
+
+---
+
 
 # Cardano-AI-Wallet-Alert
 
