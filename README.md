@@ -246,3 +246,4 @@ This is a prototype repository. For production development, consider:
 **Note**: This prototype demonstrates structure and feasibility. All implementations are mock/dummy services and should not be used in production without proper integration and security measures.
 
 # Cardano-AI-Wallet-Alert
+
